@@ -1,0 +1,16 @@
+<html ng-app="commentBookApp">
+    <head>
+        <title>Message Board</title>
+        <script src="js/angular.min.js"></script>
+        <script src="js/controllers.js"></script>
+    </head>
+    <body ng-controller="CommentBookController">
+        <h1>Please leave a comment</h1>
+        <ul>
+            <li ng-repeat="comment in comments">{{comment.text}}</li>
+        </ul>
+        <textarea id="">
+
+        </textarea>
+    </body>
+</html>
