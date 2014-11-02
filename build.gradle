@@ -28,15 +28,32 @@ configurations.driver.each { File file ->
 }
 
 task buildTables << {
-    def sql = Sql.newInstance("jdbc:h2:~/appsecdemo", "", "", "org.h2.Driver")
-    sql.execute '''
-    CREATE TABLE IF NOT EXISTS directory_entry (
+
+    runSQL { conn ->
+        conn.execute '''CREATE TABLE IF NOT EXISTS directory_entry (
             id int primary key,
             first_name VARCHAR(255) NOT NULL,
-            last_name VARCHAR(255) NOT NULL)
-    '''
+            last_name VARCHAR(255) NOT NULL)'''
 
-    sql.execute '''
-        CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)
-    '''
+        conn.execute '''CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)'''
+    }
+
+}
+
+task dropTables << {
+    runSQL { conn ->
+        conn.execute 'DROP TABLE IF EXISTS directory_entry'
+    }
+}
+
+task doInserts << {
+    runSQL { conn ->
+        conn.execute("INSERT INTO directory_entry (id, first_name, last_name) VALUES (0, 'Daniel', 'Somerfield')")
+        conn.execute("INSERT INTO directory_entry (id, first_name, last_name) VALUES (1, 'Bob', 'Newhart')")
+    }
+}
+
+def runSQL(sql) {
+    def instance = Sql.newInstance("jdbc:h2:~/appsecdemo", "", "", "org.h2.Driver")
+    sql(instance)
 }

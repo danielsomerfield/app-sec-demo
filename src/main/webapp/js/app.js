@@ -57,7 +57,9 @@ var remote = {
         }
         else
         {
-            throw "NYI: need to return an instantly resolving promise.";
+            var d = $.Deferred();
+            d.resolve(new Array());
+            return d.promise();
         }
     }
 };
