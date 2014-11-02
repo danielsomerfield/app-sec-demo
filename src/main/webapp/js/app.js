@@ -51,8 +51,14 @@ var timer = {
 
 var remote = {
     search: function (text) {
-        //TODO: un-hardcode
-        return $.ajax("http://localhost:8080/AppSecDemo/demo/service/search/${q}".replace("${q}", text));
+        if (text) {
+            //TODO: un-hardcode
+            return $.ajax("http://localhost:8080/AppSecDemo/demo/service/search/${q}".replace("${q}", text));
+        }
+        else
+        {
+            throw "NYI: need to return an instantly resolving promise.";
+        }
     }
 };
 

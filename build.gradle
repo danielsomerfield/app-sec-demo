@@ -1,20 +1,42 @@
+import groovy.sql.Sql
+
 apply plugin: 'java'
 apply plugin: 'jetty'
 apply plugin: 'war'
 
-
-//sourceCompatibility = 1.8
+sourceCompatibility = 1.8
 version = '1.0'
 
 repositories {
     mavenCentral()
 }
 
+configurations { driver }
+
 dependencies {
-    //todo: import spring-core, mvc & jdbc
     compile 'org.springframework:spring-webmvc:4.1.1.RELEASE'
     compile 'org.springframework:spring-jdbc:4.1.1.RELEASE'
     compile 'com.h2database:h2:1.4.182'
     providedCompile "javax.servlet:servlet-api:2.5"
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    driver 'com.h2database:h2:1.4.182'
+}
+
+URLClassLoader loader = GroovyObject.class.classLoader
+configurations.driver.each { File file ->
+    loader.addURL(file.toURI().toURL())
+}
+
+task buildTables << {
+    def sql = Sql.newInstance("jdbc:h2:~/appsecdemo", "", "", "org.h2.Driver")
+    sql.execute '''
+    CREATE TABLE IF NOT EXISTS directory_entry (
+            id int primary key,
+            first_name VARCHAR(255) NOT NULL,
+            last_name VARCHAR(255) NOT NULL)
+    '''
+
+    sql.execute '''
+        CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)
+    '''
 }
