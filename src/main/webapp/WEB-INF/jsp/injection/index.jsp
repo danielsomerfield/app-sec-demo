@@ -10,39 +10,41 @@
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
+    <div class="panel">
         <h1>People Directory</h1>
     </div>
-    <div id="alert-wrapper">
-        <div id="message-status" class="alert alert-danger">
-              Message goes here.
+
+    <div class="panel panel-default main-panel">
+        <div id="alert-wrapper">
+            <div id="message-status" class="alert alert-danger">
+                Message goes here.
+            </div>
         </div>
-    </div>
-    <div class="page-header">
-        <h2>Search for a name</h2>
-        <label for="filter">Filter</label><input type="text" id="filter"/>
-    </div>
-    <div class="scrollable-table">
-        <table class="table">
-            <thead>
+        <div>
+            <h2>Search for a name</h2>
+            <label for="filter">Filter</label><input type="text" id="filter"/>
+        </div>
+        <div class="scrollable-table">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                </tr>
+                </thead>
+                <tbody id="names"></tbody>
+            </table>
+        </div>
+
+        <table style="display:none">
+            <tbody id="template">
             <tr>
-                <th>Last Name</th>
-                <th>First Name</th>
+                <td><span>{lastName}</span></td>
+                <td><span>{firstName}</span></td>
             </tr>
-            </thead>
-            <tbody id="names"></tbody>
+            </tbody>
         </table>
     </div>
-
-    <table style="display:none">
-        <tbody id="template">
-        <tr>
-            <td><span>{lastName}</span></td>
-            <td><span>{firstName}</span></td>
-        </tr>
-        </tbody>
-    </table>
-
 </div>
 </body>
 </html>

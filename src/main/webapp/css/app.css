@@ -8,7 +8,7 @@ table th {
 }
 
 .scrollable-table {
-    max-height: 25%;
+    height: 40%;
     overflow-y: scroll;
     border: lightgray dashed 1px;
     padding: 10px;
@@ -27,4 +27,19 @@ table th {
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+}
+
+.main-panel {
+    padding: 5px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+}
+
+.dropdown-menu {
+    margin-bottom: 0;
+
 }
