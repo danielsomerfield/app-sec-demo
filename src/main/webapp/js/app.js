@@ -7,12 +7,16 @@ var app = {
         var filterField = $("#filter");
         filterField.on("input propertychange paste", function () {
             timer.start().done(function () {
-                remote.search(filterField.val()).done(function (result) {
-                    app.showList(result);
-                }).fail(function () {
-                    //TODO: handle failure -- badly
-                });
+                app.search(filterField.val());
             });
+        });
+        app.search();
+    },
+    search: function(text){
+        remote.search(text).done(function (result) {
+            app.showList(result);
+        }).fail(function () {
+            //TODO: handle failure -- badly
         });
     },
     showList: function (list) {
@@ -57,9 +61,7 @@ var remote = {
         }
         else
         {
-            var d = $.Deferred();
-            d.resolve(new Array());
-            return d.promise();
+            return $.ajax("http://localhost:8080/AppSecDemo/demo/service/entries/");
         }
     }
 };

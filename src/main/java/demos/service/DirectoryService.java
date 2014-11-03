@@ -17,7 +17,11 @@ public class DirectoryService {
         this.directoryEntryDAO = directoryEntryDAO;
     }
 
-    public List<DirectoryEntry> directoriesWithText(String text) {
+    public List<DirectoryEntry> entriesWithText(String text) {
         return directoryEntryDAO.findWithContainingText(text);
+    }
+
+    public List<DirectoryEntry> allEntries() {
+        return directoryEntryDAO.findAll();
     }
 }

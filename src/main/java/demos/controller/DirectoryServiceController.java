@@ -23,7 +23,12 @@ public class DirectoryServiceController {
     @RequestMapping("/service/search/{query}")
     @ResponseBody
     public List<DirectoryEntry> findEntries(@PathVariable("query") String query) {
-        System.out.println(query);
-        return directoryService.directoriesWithText(query);
+        return directoryService.entriesWithText(query);
+    }
+
+    @RequestMapping("/service/entries/")
+    @ResponseBody
+    public List<DirectoryEntry> allEntries() {
+        return directoryService.allEntries();
     }
 }
