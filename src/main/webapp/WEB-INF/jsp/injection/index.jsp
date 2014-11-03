@@ -17,15 +17,17 @@
         <h2>Search for a name</h2>
         <label for="filter">Filter</label><input type="text" id="filter"/>
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Last Name</th>
-            <th>First Name</th>
-        </tr>
-        </thead>
-        <tbody id="names"></tbody>
-    </table>
+    <div class="scrollable-table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+            </tr>
+            </thead>
+            <tbody id="names"></tbody>
+        </table>
+    </div>
 
     <table style="display:none">
         <tbody id="template">
@@ -35,6 +37,7 @@
         </tr>
         </tbody>
     </table>
+
 </div>
 </body>
 </html>

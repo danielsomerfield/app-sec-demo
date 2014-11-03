@@ -6,3 +6,10 @@ table th {
     padding-left: 5px;
     padding-right: 5px;
 }
+
+.scrollable-table {
+    max-height: 25%;
+    overflow-y: scroll;
+    border: lightgray dashed 1px;
+    padding: 10px;
+}

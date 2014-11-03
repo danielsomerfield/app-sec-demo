@@ -16,8 +16,8 @@ public class DirectoryEntryDAO {
             rs.getString("first_name"),
             rs.getString("last_name")
     );
-    public static final String SEARCH_QUERY = "SELECT * FROM directory_entry WHERE last_name LIKE '%%%s%%' " +
-            "OR first_name LIKE '%%%s%%'";
+    public static final String SEARCH_QUERY = "SELECT * FROM directory_entry WHERE UPPER(last_name) LIKE '%%%s%%' " +
+            "OR UPPER(first_name) LIKE '%%%s%%'";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -28,7 +28,7 @@ public class DirectoryEntryDAO {
 
     public List<DirectoryEntry> findWithContainingText(String text) {
         return jdbcTemplate.query(
-                String.format(SEARCH_QUERY, text, text),
+                String.format(SEARCH_QUERY, text.toUpperCase(), text.toUpperCase()),
                 ENTRY_ROW_MAPPER
         );
     }

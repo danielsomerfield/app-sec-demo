@@ -1,5 +1,7 @@
 import groovy.sql.Sql
 
+import java.security.MessageDigest
+
 apply plugin: 'java'
 apply plugin: 'jetty'
 apply plugin: 'war'
@@ -27,39 +29,106 @@ configurations.driver.each { File file ->
     loader.addURL(file.toURI().toURL())
 }
 
-task buildTables << {
+def buildTables() {
     runSqlStatements(
-            ['''CREATE TABLE IF NOT EXISTS directory_entry (
-            id int primary key,
-            first_name VARCHAR(255) NOT NULL,
-            last_name VARCHAR(255) NOT NULL)''',
-            '''CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)''']
-    )
+            [
+                    '''CREATE TABLE IF NOT EXISTS directory_entry (
+                        id int primary key,
+                        first_name  VARCHAR(255) NOT NULL,
+                        last_name   VARCHAR(255) NOT NULL
+                    )''',
 
+                    '''CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)''',
+
+                    '''CREATE TABLE IF NOT EXISTS application_user (
+                        id int primary key,
+                        username        VARCHAR(255) NOT NULL,
+                        password_hash   VARCHAR(255) NOT NULL
+                    )'''
+            ]
+    )
 }
 
-task dropTables << {
+def dropTables() {
     runSqlStatements('DROP TABLE IF EXISTS directory_entry')
+    runSqlStatements('DROP TABLE IF EXISTS application_user')
 }
 
-task doInserts << {
+task rebuildDatabase << {
+    dropTables()
+    buildTables()
+    doInserts()
+}
+
+def doInserts() {
+    int x = 0;
+    def idGenerator = {
+        x++
+    }
     runSqlStatements(
-            ["INSERT INTO directory_entry (id, first_name, last_name) VALUES (0, 'Daniel', 'Somerfield')",
-            "INSERT INTO directory_entry (id, first_name, last_name) VALUES (1, 'Bob', 'Newhart')"]
+            [
+                    insertEntry('Daniel', 'Somerfield', idGenerator),
+                    insertEntry('Bob', 'Newhart', idGenerator),
+                    insertEntry('Richard', 'Stallman', idGenerator),
+                    insertEntry('George', 'Lucas', idGenerator),
+                    insertEntry('Ronald', 'Reagan', idGenerator),
+                    insertEntry('Tim', 'Conway', idGenerator),
+                    insertEntry('Richard', 'Marks', idGenerator),
+                    insertEntry('Vladamir', 'Proscule', idGenerator),
+                    insertEntry('Micky', 'Rourke', idGenerator),
+                    insertEntry('Sebastian', 'Mariner', idGenerator),
+                    insertEntry('Thomas', 'Beckett', idGenerator),
+                    insertEntry('Ricky', 'Astley', idGenerator),
+                    insertUser('daniel', 'mypassword', idGenerator),
+                    insertUser('admin', 'admin', idGenerator),
+                    insertUser('admin1', 'admin', idGenerator)
+            ]
     )
+}
+
+def insertUser(username, password, idGenerator) {
+    return String.format("INSERT INTO application_user (id, username, password_hash) VALUES (%s, '%s', '%s')",
+            idGenerator(), username, hashPassword(password))
+}
+
+def hashPassword(password) {
+    MessageDigest m = MessageDigest.getInstance("MD5")
+    m.update(password.getBytes("UTF-8"))
+    toHex(m.digest())
+}
+
+def toHex(bytes) {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < bytes.length; i++) {
+        if ((0xff & bytes[i]) < 0x10) {
+            sb.append('0');
+        }
+        sb.append(Integer.toHexString(0xff & bytes[i]));
+    }
+    return sb.toString();
+}
+
+def insertEntry(firstname, lastname, idGenerator) {
+    return String.format("INSERT INTO directory_entry (id, first_name, last_name) VALUES (%s, '%s', '%s')", idGenerator(), firstname, lastname)
 }
 
 def runSqlFunctions(sqlFunction) {
     def instance = Sql.newInstance("jdbc:h2:~/appsecdemo", "", "", "org.h2.Driver")
-    sqlFunction(instance)
+    try {
+        sqlFunction(instance)
+    } finally {
+        instance.close()
+    }
+
 }
 
 def runSqlStatements(sql) {
     if (sql instanceof String) {
-        runSqlFunctions{conn->conn.execute(sql)}
+        runSqlFunctions { conn -> conn.execute(sql) }
     } else {
         sql.each { s -> runSqlStatements(s) }
     }
 }
 
+jettyRunWar.dependsOn rebuildDatabase
 
