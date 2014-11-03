@@ -13,6 +13,11 @@
     <div class="jumbotron">
         <h1>People Directory</h1>
     </div>
+    <div id="alert-wrapper">
+        <div id="message-status" class="alert alert-danger">
+              Message goes here.
+        </div>
+    </div>
     <div class="page-header">
         <h2>Search for a name</h2>
         <label for="filter">Filter</label><input type="text" id="filter"/>

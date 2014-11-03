@@ -13,3 +13,18 @@ table th {
     border: lightgray dashed 1px;
     padding: 10px;
 }
+
+#alert-wrapper {
+    display: none;
+    height: 150px;
+    width: 80%;
+    top: 90px;
+    overflow-y: auto;
+    position: absolute;
+}
+
+#message-status {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
