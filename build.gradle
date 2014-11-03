@@ -28,32 +28,38 @@ configurations.driver.each { File file ->
 }
 
 task buildTables << {
-
-    runSQL { conn ->
-        conn.execute '''CREATE TABLE IF NOT EXISTS directory_entry (
+    runSqlStatements(
+            ['''CREATE TABLE IF NOT EXISTS directory_entry (
             id int primary key,
             first_name VARCHAR(255) NOT NULL,
-            last_name VARCHAR(255) NOT NULL)'''
-
-        conn.execute '''CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)'''
-    }
+            last_name VARCHAR(255) NOT NULL)''',
+            '''CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)''']
+    )
 
 }
 
 task dropTables << {
-    runSQL { conn ->
-        conn.execute 'DROP TABLE IF EXISTS directory_entry'
-    }
+    runSqlStatements('DROP TABLE IF EXISTS directory_entry')
 }
 
 task doInserts << {
-    runSQL { conn ->
-        conn.execute("INSERT INTO directory_entry (id, first_name, last_name) VALUES (0, 'Daniel', 'Somerfield')")
-        conn.execute("INSERT INTO directory_entry (id, first_name, last_name) VALUES (1, 'Bob', 'Newhart')")
+    runSqlStatements(
+            ["INSERT INTO directory_entry (id, first_name, last_name) VALUES (0, 'Daniel', 'Somerfield')",
+            "INSERT INTO directory_entry (id, first_name, last_name) VALUES (1, 'Bob', 'Newhart')"]
+    )
+}
+
+def runSqlFunctions(sqlFunction) {
+    def instance = Sql.newInstance("jdbc:h2:~/appsecdemo", "", "", "org.h2.Driver")
+    sqlFunction(instance)
+}
+
+def runSqlStatements(sql) {
+    if (sql instanceof String) {
+        runSqlFunctions{conn->conn.execute(sql)}
+    } else {
+        sql.each { s -> runSqlStatements(s) }
     }
 }
 
-def runSQL(sql) {
-    def instance = Sql.newInstance("jdbc:h2:~/appsecdemo", "", "", "org.h2.Driver")
-    sql(instance)
-}
+
