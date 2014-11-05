@@ -45,6 +45,15 @@
             </tbody>
         </table>
     </div>
+    <div class="panel">
+        <div id="login-panel" class="navbar-right">
+            <form id="login-form" class="form-inline" role="form" method="post">
+                <input id="login_username" name="username" type="text" placeholder="username" class="form-control" />
+                <input id="login_password" name="password" type="password" placeholder="password" class="form-control" />
+                <button type="submit" class="btn btn-default">Login</button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

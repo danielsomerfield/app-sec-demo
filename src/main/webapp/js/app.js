@@ -11,23 +11,30 @@ var app = {
             });
         });
         app.search();
-    },
-    search: function(text){
-        remote.search(text).done(function (result) {
-            app.showList(result);
-        }).fail(function (ajax, state, errorMessage) {
-            app.showErrorDialog(errorMessage);
+
+        $("#login-form").on("submit", function () {
+            remote.login($("#login_username").val(), $("#login_password").val());
+            return false;
         });
     },
+    search: function (text) {
+        remote.search(text).done(function (result) {
+            ui.showList(result);
+        }).fail(function (ajax, state, errorMessage) {
+            ui.showErrorDialog(errorMessage);
+        });
+    }
+};
+
+var ui = {
     showList: function (list) {
-        console.log("Showing: " + JSON.stringify(list));
         $("#names").html("");
         $.each(list, function (index, item) {
-            app.buildEntry(list, item);
+            ui.buildEntry(list, item);
         });
     },
     buildEntry: function (list, item) {
-        $("#names").append(app.formatEntry(item));
+        $("#names").append(ui.formatEntry(item));
     },
     formatEntry: function (item) {
         var src = $("#template").html()
@@ -35,12 +42,11 @@ var app = {
             .replace("{firstName}", item.firstName);
         return $(src)
     },
-    showErrorDialog : function(errorMessage)
-    {
+    showErrorDialog: function (errorMessage) {
         var wrapper = $("#alert-wrapper");
         $("#message-status").html(errorMessage);
         wrapper.show();
-        setTimeout(function(){
+        setTimeout(function () {
             wrapper.fadeOut();
         }, 3000);
     }
@@ -66,13 +72,22 @@ var timer = {
 var remote = {
     search: function (text) {
         if (text) {
-            //TODO: un-hardcode
-            return $.ajax("http://localhost:8080/AppSecDemo/demo/service/search/${q}".replace("${q}", text));
+            return $.ajax("/AppSecDemo/demo/service/search/${q}".replace("${q}", text));
         }
-        else
-        {
-            return $.ajax("http://localhost:8080/AppSecDemo/demo/service/entries/");
+        else {
+            return $.ajax("/AppSecDemo/demo/service/entries/");
         }
+    },
+    login: function (username, password) {
+        return $.ajax("/AppSecDemo/demo/service/login",
+            {
+                type: "POST",
+                data: {
+                    username: username,
+                    password: password
+                }
+            }
+        );
     }
 };
 
