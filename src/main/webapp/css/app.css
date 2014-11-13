@@ -47,3 +47,7 @@ table th {
 #login-panel {
     margin-top: 10px;
 }
+
+.admin-required {
+    display: none;
+}

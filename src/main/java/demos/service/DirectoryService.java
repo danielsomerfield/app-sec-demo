@@ -24,4 +24,8 @@ public class DirectoryService {
     public List<DirectoryEntry> allEntries() {
         return directoryEntryDAO.findAll();
     }
+
+    public void deleteEntryById(long id) {
+        directoryEntryDAO.delete(id);
+    }
 }

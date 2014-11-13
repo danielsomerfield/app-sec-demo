@@ -3,10 +3,9 @@ package demos.controller;
 import demos.domain.DirectoryEntry;
 import demos.service.DirectoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +29,11 @@ public class DirectoryServiceController {
     @ResponseBody
     public List<DirectoryEntry> allEntries() {
         return directoryService.allEntries();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/service/entries/{id}", method = RequestMethod.DELETE)
+    public void deleteEntry(@PathVariable long id) {
+        directoryService.deleteEntryById(id);
     }
 }

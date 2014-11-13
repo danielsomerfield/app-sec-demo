@@ -1,5 +1,6 @@
 $(document).ready(function () {
     app.bind();
+    app.loadAppState();
 })
 
 var app = {
@@ -22,6 +23,12 @@ var app = {
             ui.showList(result);
         }).fail(function (ajax, state, errorMessage) {
             ui.showErrorDialog(errorMessage);
+        });
+    },
+    loadAppState: function () {
+        remote.getAppState().success(function (appState) {
+            console.log("***** Loaded app state " + JSON.stringify(appState));
+            ui.initAdminUI(appState["loggedIn"]);
         });
     }
 };
@@ -49,6 +56,15 @@ var ui = {
         setTimeout(function () {
             wrapper.fadeOut();
         }, 3000);
+    },
+    initAdminUI: function(adminMode) {
+        if (adminMode){
+            $(".admin-required").show();
+        }
+        else
+        {
+            $(".admin-required").hide();
+        }
     }
 };
 
@@ -79,7 +95,7 @@ var remote = {
         }
     },
     login: function (username, password) {
-        return $.ajax("/AppSecDemo/demo/service/login",
+        return $.ajax("/AppSecDemo/j_spring_security_check", //TODO: un-hardcode this
             {
                 type: "POST",
                 data: {
@@ -88,6 +104,9 @@ var remote = {
                 }
             }
         );
+    },
+    getAppState: function () {
+        return $.ajax("/AppSecDemo/demo/service/appState");
     }
 };
 

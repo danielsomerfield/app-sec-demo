@@ -36,4 +36,8 @@ public class DirectoryEntryDAO {
     public List<DirectoryEntry> findAll() {
         return jdbcTemplate.query(FIND_ALL_QUERY, ENTRY_ROW_MAPPER);
     }
+
+    public void delete(long id) {
+        throw new UnsupportedOperationException(); // TODO
+    }
 }

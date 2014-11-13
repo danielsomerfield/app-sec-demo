@@ -1,4 +1,14 @@
 # TODO
+- AJAX login
+- Show delete links if logged in
+- Reject delete calls if not logged in
+- Make sure we have request methods on everything
+- Get rid of extra console logging
+- Remove (or replace with logging) all cases of System.out.println
+- Check class, methods, variables for "final"
+
+- Move spring initialization of application resources to the app context
+
 - ADD password protected page (and username / password table) that is susceptible to:
     - OR 1 = 1 
     - Leakage via UNION: (Talk about error message being a tip off)

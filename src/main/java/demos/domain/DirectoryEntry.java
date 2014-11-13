@@ -4,6 +4,7 @@ public class DirectoryEntry {
 
     private String firstName;
     private String lastName;
+    private long id;
 
     public DirectoryEntry() {
     }
@@ -27,5 +28,13 @@ public class DirectoryEntry {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

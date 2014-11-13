@@ -16,9 +16,7 @@
 
     <div class="panel panel-default main-panel">
         <div id="alert-wrapper">
-            <div id="message-status" class="alert alert-danger">
-                Message goes here.
-            </div>
+            <div id="message-status" class="alert alert-danger"></div>
         </div>
         <div>
             <h2>Search for a name</h2>
@@ -30,6 +28,7 @@
                 <tr>
                     <th>Last Name</th>
                     <th>First Name</th>
+                    <th class="admin-required">Admin</th>
                 </tr>
                 </thead>
                 <tbody id="names"></tbody>
@@ -41,6 +40,7 @@
             <tr>
                 <td><span>{lastName}</span></td>
                 <td><span>{firstName}</span></td>
+                <td class="admin-required"><span>[ x ]</span></td>
             </tr>
             </tbody>
         </table>

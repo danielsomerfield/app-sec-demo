@@ -3,11 +3,21 @@ import groovy.sql.Sql
 import java.security.MessageDigest
 
 apply plugin: 'java'
-apply plugin: 'jetty'
 apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
 
 sourceCompatibility = 1.8
 version = '1.0'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.0'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -16,12 +26,29 @@ repositories {
 configurations { driver }
 
 dependencies {
-    compile 'org.springframework:spring-webmvc:4.1.1.RELEASE'
-    compile 'org.springframework:spring-jdbc:4.1.1.RELEASE'
+
+    def springVersion="4.0.1.RELEASE"
+    def springSecurityVersion="3.2.5.RELEASE"
+    def tomcatVersion="7.0.50"
+
+    compile "org.springframework:spring-webmvc:${springVersion}"
+    compile "org.springframework:spring-jdbc:${springVersion}"
+    compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
+    compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
+    compile "com.fasterxml.jackson.core:jackson-core:2.3.0"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.3.0"
+
     compile 'com.h2database:h2:1.4.182'
-    providedCompile "javax.servlet:servlet-api:2.5"
+    compile 'javax.servlet:jstl:1.2'
+    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
     testCompile group: 'junit', name: 'junit', version: '4.11'
     driver 'com.h2database:h2:1.4.182'
+
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
 }
 
 URLClassLoader loader = GroovyObject.class.classLoader
@@ -33,7 +60,7 @@ def buildTables() {
     runSqlStatements(
             [
                     '''CREATE TABLE IF NOT EXISTS directory_entry (
-                        id int primary key,
+                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
                         first_name  VARCHAR(255) NOT NULL,
                         last_name   VARCHAR(255) NOT NULL
                     )''',
@@ -130,5 +157,6 @@ def runSqlStatements(sql) {
     }
 }
 
-jettyRunWar.dependsOn rebuildDatabase
+tomcatRunWar.dependsOn rebuildDatabase
+tomcatRun.dependsOn rebuildDatabase
 
