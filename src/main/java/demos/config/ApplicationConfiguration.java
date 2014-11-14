@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"demos.controller", "demos.dao", "demos.service"})
+@ComponentScan(basePackages = {"demos.controller", "demos.dao", "demos.service", "demos.spring"})
 @Import(SecurityConfig.class)
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
