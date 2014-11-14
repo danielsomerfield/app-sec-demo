@@ -14,7 +14,15 @@ var app = {
         app.search();
 
         $("#login-form").on("submit", function () {
-            remote.login($("#login_username").val(), $("#login_password").val());
+            remote.login($("#login_username").val(), $("#login_password").val())
+                .fail(function (ajax, state, errorMessage) {
+                    ui.showErrorDialog(ajax.responseJSON["message"]);
+                })
+                .done(function(message){
+                    console.log("Logged in with message: " + message)
+//                   ui.showInfoDialog(message);
+                    app.loadAppState();
+                });
             return false;
         });
     },
@@ -95,7 +103,7 @@ var remote = {
         }
     },
     login: function (username, password) {
-        return $.ajax("/AppSecDemo/j_spring_security_check", //TODO: un-hardcode this
+        return $.ajax("/AppSecDemo/login", //TODO: un-hardcode this
             {
                 type: "POST",
                 data: {
