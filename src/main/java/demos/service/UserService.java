@@ -19,4 +19,7 @@ public class UserService {
         return userDAO.findUserByUsername(username);
     }
 
+    public AppUser findUserByUsernameAndPassword(String username, String password) {
+        throw new UnsupportedOperationException(); // TODO
+    }
 }

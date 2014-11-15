@@ -34,6 +34,7 @@ public class UserDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    //TODO: spring is a bit too smart here and doesn't do the search via username and password
     public AppUser findUserByUsername(String username) {
         List<AppUser> user = jdbcTemplate.query(format(FIND_USER_SQL, username), USER_ROW_MAPPER);
         assert user.size() <= 1;
