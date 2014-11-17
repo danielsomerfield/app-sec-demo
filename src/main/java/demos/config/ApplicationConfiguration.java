@@ -1,14 +1,10 @@
 package demos.config;
 
-import demos.service.UserService;
-import demos.spring.UsernamePasswordAuthenticationProvider;
 import org.h2.jdbcx.JdbcDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -19,7 +15,6 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"demos.controller", "demos.dao", "demos.service", "demos.spring"})
-@Import(SecurityConfig.class)
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
@@ -29,12 +24,6 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         internalResourceViewResolver.setPrefix("/WEB-INF/jsp/");
         internalResourceViewResolver.setSuffix(".jsp");
         return internalResourceViewResolver;
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider(UserService userService)
-    {
-        return new UsernamePasswordAuthenticationProvider(userService);
     }
 
     @Bean

@@ -5,7 +5,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class SpringMVCIntializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        System.out.print("*****");
         return new Class[]{ApplicationConfiguration.class};
     }
 
