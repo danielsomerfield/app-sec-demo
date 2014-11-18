@@ -1,6 +1,4 @@
 # TODO
-- AJAX login
-- Show delete links if logged in
 - Reject delete calls if not logged in
 - Make sure we have request methods on everything
 - Get rid of extra console logging

@@ -159,4 +159,3 @@ def runSqlStatements(sql) {
 
 tomcatRunWar.dependsOn rebuildDatabase
 tomcatRun.dependsOn rebuildDatabase
-

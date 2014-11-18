@@ -17,10 +17,9 @@ var app = {
             remote.login($("#login_username").val(), $("#login_password").val())
                 .fail(function (ajax, state, errorMessage) {
                     console.log(errorMessage);
-                    ui.showErrorDialog(ajax.responseJSON["message"]);
+                    ui.showErrorDialog("Login failed.");
                 })
                 .done(function(userState){
-                    console.log("Logged in with message: " + JSON.stringify(userState));
                     ui.initAdminUI(userState["loggedIn"]);
                 });
             return false;

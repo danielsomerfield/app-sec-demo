@@ -1,9 +1,12 @@
 package demos.controller;
 
+import demos.Constants;
 import demos.domain.AppUser;
 import demos.domain.UserState;
 import demos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,25 +15,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
-import static demos.Constants.USER_STATE_SESSION_ATTRIBUTE;
-
 @Controller
 public class LoginController {
 
     private final UserService userService;
 
     @Autowired
-    public LoginController(UserService userService) {
+    public LoginController(final UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(value="/service/login", method= RequestMethod.POST)
+    @RequestMapping(value = "/service/login", method = RequestMethod.POST)
     @ResponseBody
-    public UserState login(@RequestParam String username, @RequestParam String password, HttpSession session){
+    public ResponseEntity<UserState> login(@RequestParam final String username,
+                                           @RequestParam final String password,
+                                           HttpSession session) {
+
         final AppUser user = userService.findUserByUsernameAndPassword(username, password);
-        final UserState state = new UserState(user != null);
-        session.setAttribute(USER_STATE_SESSION_ATTRIBUTE, state);
-        return state;
+        return new ResponseEntity<>(
+                storeAppState(new UserState(user != null), session),
+                user != null ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
+    }
+
+    private UserState storeAppState(final UserState userState, final HttpSession session) {
+        session.setAttribute(Constants.USER_STATE_SESSION_ATTRIBUTE, userState);
+        return userState;
     }
 
 
