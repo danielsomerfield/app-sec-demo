@@ -1,29 +1,37 @@
 package demos.controller;
 
-import demos.domain.AppState;
+import demos.domain.AppUser;
+import demos.domain.UserState;
 import demos.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
+
+import static demos.Constants.USER_STATE_SESSION_ATTRIBUTE;
 
 @Controller
 public class LoginController {
 
-    private UserService userService;
+    private final UserService userService;
 
+    @Autowired
     public LoginController(UserService userService) {
         this.userService = userService;
     }
 
     @RequestMapping(value="/service/login", method= RequestMethod.POST)
     @ResponseBody
-    public AppState login(String username, String password){
-        userService.findUserByUsernameAndPassword(username, password);
-        //Try to authenticate with the username and password
-        //If it succeeds, set a session value
-        //Return the current app state
-        return AppState.builder().withLoggedIn(true).build();
+    public UserState login(@RequestParam String username, @RequestParam String password, HttpSession session){
+        final AppUser user = userService.findUserByUsernameAndPassword(username, password);
+        final UserState state = new UserState(user != null);
+        session.setAttribute(USER_STATE_SESSION_ATTRIBUTE, state);
+        return state;
     }
+
 
 }

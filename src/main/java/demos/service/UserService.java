@@ -8,18 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     @Autowired
-    public UserService(UserDAO userDAO) {
+    public UserService(final UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
-    public AppUser getUser(String username) {
-        return userDAO.findUserByUsername(username);
-    }
-
-    public AppUser findUserByUsernameAndPassword(String username, String password) {
-        throw new UnsupportedOperationException(); // TODO
+    public AppUser findUserByUsernameAndPassword(final String username, final String password) {
+        return userDAO.findUserByUsernameAndPassword(username, password);
     }
 }

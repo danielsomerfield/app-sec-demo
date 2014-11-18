@@ -1,6 +1,6 @@
 $(document).ready(function () {
     app.bind();
-    app.loadAppState();
+    app.loadUserState();
 })
 
 var app = {
@@ -16,12 +16,12 @@ var app = {
         $("#login-form").on("submit", function () {
             remote.login($("#login_username").val(), $("#login_password").val())
                 .fail(function (ajax, state, errorMessage) {
+                    console.log(errorMessage);
                     ui.showErrorDialog(ajax.responseJSON["message"]);
                 })
-                .done(function(message){
-                    console.log("Logged in with message: " + message)
-//                   ui.showInfoDialog(message);
-                    app.loadAppState();
+                .done(function(userState){
+                    console.log("Logged in with message: " + JSON.stringify(userState));
+                    ui.initAdminUI(userState["loggedIn"]);
                 });
             return false;
         });
@@ -33,10 +33,10 @@ var app = {
             ui.showErrorDialog(errorMessage);
         });
     },
-    loadAppState: function () {
-        remote.getAppState().success(function (appState) {
-            console.log("***** Loaded app state " + JSON.stringify(appState));
-            ui.initAdminUI(appState["loggedIn"]);
+    loadUserState: function () {
+        remote.getUserState().success(function (userState) {
+            console.log("***** Loaded app state " + JSON.stringify(userState));
+            ui.initAdminUI(userState["loggedIn"]);
         });
     }
 };
@@ -68,9 +68,11 @@ var ui = {
     initAdminUI: function(adminMode) {
         if (adminMode){
             $(".admin-required").show();
+            $("#login-panel").hide();
         }
         else
         {
+            $("#login-panel").show();
             $(".admin-required").hide();
         }
     }
@@ -103,7 +105,7 @@ var remote = {
         }
     },
     login: function (username, password) {
-        return $.ajax("/AppSecDemo/login", //TODO: un-hardcode this
+        return $.ajax("/AppSecDemo/demo/service/login", //TODO: un-hardcode this
             {
                 type: "POST",
                 data: {
@@ -113,8 +115,8 @@ var remote = {
             }
         );
     },
-    getAppState: function () {
-        return $.ajax("/AppSecDemo/demo/service/appState");
+    getUserState: function () {
+        return $.ajax("/AppSecDemo/demo/service/userState");
     }
 };
 
