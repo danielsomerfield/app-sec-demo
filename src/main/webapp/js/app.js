@@ -19,9 +19,18 @@ var app = {
                     console.log(errorMessage);
                     ui.showErrorDialog("Login failed.");
                 })
-                .done(function(userState){
+                .done(function (userState) {
+                    $("#login_username").val("");
+                    $("#login_password").val("");
                     ui.initAdminUI(userState["loggedIn"]);
                 });
+            return false;
+        });
+
+        $("#logout-form").on("submit", function () {
+            remote.logout().done(function(){
+                app.loadUserState();
+            })
             return false;
         });
     },
@@ -34,7 +43,6 @@ var app = {
     },
     loadUserState: function () {
         remote.getUserState().success(function (userState) {
-            console.log("***** Loaded app state " + JSON.stringify(userState));
             ui.initAdminUI(userState["loggedIn"]);
         });
     }
@@ -64,13 +72,12 @@ var ui = {
             wrapper.fadeOut();
         }, 3000);
     },
-    initAdminUI: function(adminMode) {
-        if (adminMode){
+    initAdminUI: function (adminMode) {
+        if (adminMode) {
             $(".admin-required").show();
             $("#login-panel").hide();
         }
-        else
-        {
+        else {
             $("#login-panel").show();
             $(".admin-required").hide();
         }
@@ -104,13 +111,20 @@ var remote = {
         }
     },
     login: function (username, password) {
-        return $.ajax("/AppSecDemo/demo/service/login", //TODO: un-hardcode this
+        return $.ajax("/AppSecDemo/demo/service/login",
             {
                 type: "POST",
                 data: {
                     username: username,
                     password: password
                 }
+            }
+        );
+    },
+    logout: function(){
+        return $.ajax("/AppSecDemo/demo/service/logout",
+            {
+                type: "POST"
             }
         );
     },

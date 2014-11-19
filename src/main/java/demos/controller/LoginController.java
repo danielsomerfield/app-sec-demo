@@ -42,5 +42,10 @@ public class LoginController {
         return userState;
     }
 
+    @RequestMapping(value = "/service/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public UserState logout(HttpSession session) {
+        return storeAppState(new UserState(false), session);
+    }
 
 }

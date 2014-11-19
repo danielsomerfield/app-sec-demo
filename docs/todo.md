@@ -18,7 +18,7 @@
     
 - Find example injections
     - SQL injection
-    - Login in via OR 1 = 1
+    - Login in via aasdf' OR 1 = 1 --
     - %3b = ;
     
     

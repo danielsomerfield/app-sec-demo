@@ -42,8 +42,7 @@ public class UserDAO {
     public AppUser findUserByUsernameAndPassword(final String username, final String password) {
         final String passwordHash = hashPassword(password);
         final List<AppUser> user = jdbcTemplate.query(format(FIND_USER_SQL, username, passwordHash), USER_ROW_MAPPER);
-        assert user.size() <= 1;
-        return user.size() == 1 ? user.get(0) : null;
+        return user.size() == 0 ? null : user.get(0);
     }
 
     private String hashPassword(final String password) {

@@ -53,6 +53,11 @@
                 <button type="submit" class="btn btn-default">Login</button>
             </form>
         </div>
+        <div id="logout-panel" class="navbar-right admin-required">
+            <form id="logout-form" class="form-inline" role="form" method="post">
+                <button type="submit" class="btn btn-default">Logout</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>
