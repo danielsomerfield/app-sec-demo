@@ -13,6 +13,7 @@ public class DirectoryEntryDAO {
 
     private static final String FIND_ALL_QUERY = "SELECT * FROM directory_entry";
     private static final RowMapper<DirectoryEntry> ENTRY_ROW_MAPPER = (rs, rowNum) -> new DirectoryEntry(
+            rs.getLong("id"),
             rs.getString("first_name"),
             rs.getString("last_name")
     );

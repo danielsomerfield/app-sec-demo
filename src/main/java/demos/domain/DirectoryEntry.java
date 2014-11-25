@@ -9,7 +9,8 @@ public class DirectoryEntry {
     public DirectoryEntry() {
     }
 
-    public DirectoryEntry(String firstName, String lastname) {
+    public DirectoryEntry(final long id, final String firstName, final String lastname) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastname;
     }

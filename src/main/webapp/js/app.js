@@ -30,8 +30,13 @@ var app = {
         $("#logout-form").on("submit", function () {
             remote.logout().done(function(){
                 app.loadUserState();
-            })
+            });
             return false;
+        });
+
+        $(".container").on("click", ".show-entry", function(){
+            var id = $(this).attr("data-id");
+            app.showEntry(id);
         });
     },
     search: function (text) {
@@ -45,6 +50,10 @@ var app = {
         remote.getUserState().success(function (userState) {
             ui.initAdminUI(userState["loggedIn"]);
         });
+    },
+    showEntry: function(entryId) {
+        console.log("show " + entryId);
+        alert("NYI: TODO - create a dialog and load the entry in an iframe.");
     }
 };
 
@@ -61,7 +70,8 @@ var ui = {
     formatEntry: function (item) {
         var src = $("#template").html()
             .replace("{lastName}", item.lastName)
-            .replace("{firstName}", item.firstName);
+            .replace("{firstName}", item.firstName)
+            .replace(/\{id\}/g, item.id);
         return $(src)
     },
     showErrorDialog: function (errorMessage) {

@@ -38,8 +38,8 @@
         <table style="display:none">
             <tbody id="template">
             <tr>
-                <td><span>{lastName}</span></td>
-                <td><span>{firstName}</span></td>
+                <td><span><a class="show-entry" href="#" data-id="{id}">{lastName}</a></span></td>
+                <td><span><a class="show-entry" href="#" data-id="{id}">{firstName}</a></span></td>
                 <td class="admin-required"><span>[ x ]</span></td>
             </tr>
             </tbody>

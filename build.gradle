@@ -62,7 +62,10 @@ def buildTables() {
                     '''CREATE TABLE IF NOT EXISTS directory_entry (
                         id BIGINT PRIMARY KEY AUTO_INCREMENT,
                         first_name  VARCHAR(255) NOT NULL,
-                        last_name   VARCHAR(255) NOT NULL
+                        last_name   VARCHAR(255) NOT NULL,
+                        phone       VARCHAR(255) NOT NULL,
+                        email       VARCHAR(255) NOT NULL,
+                        statement   VARCHAR(255) NOT NULL
                     )''',
 
                     '''CREATE UNIQUE INDEX IF NOT EXISTS directory_entry_idx ON directory_entry(first_name, last_name)''',
@@ -88,24 +91,24 @@ task rebuildDatabase << {
 }
 
 def doInserts() {
-    int x = 0;
+    def x = 0;
     def idGenerator = {
         x++
     }
     runSqlStatements(
             [
-                    insertEntry('Daniel', 'Somerfield', idGenerator),
-                    insertEntry('Bob', 'Newhart', idGenerator),
-                    insertEntry('Richard', 'Stallman', idGenerator),
-                    insertEntry('George', 'Lucas', idGenerator),
-                    insertEntry('Ronald', 'Reagan', idGenerator),
-                    insertEntry('Tim', 'Conway', idGenerator),
-                    insertEntry('Richard', 'Marks', idGenerator),
-                    insertEntry('Vladamir', 'Proscule', idGenerator),
-                    insertEntry('Micky', 'Rourke', idGenerator),
-                    insertEntry('Sebastian', 'Mariner', idGenerator),
-                    insertEntry('Thomas', 'Beckett', idGenerator),
-                    insertEntry('Ricky', 'Astley', idGenerator),
+                    insertEntry('Daniel', 'Somerfield', '212-555-1215', 'daniel@example.com', 'I code.', idGenerator),
+                    insertEntry('Bob', 'Newhart', '501-555-3212', 'daniel@example.com', 'I joke.', idGenerator),
+                    insertEntry('Richard', 'Stallman', '800-555-1111', 'daniel@example.com', 'I chastise.', idGenerator),
+                    insertEntry('George', 'Lucas', '514-555-1231', 'daniel@example.com', 'I write screenplays. Badly..', idGenerator),
+                    insertEntry('Ronald', 'Reagan', '212-555-0000', 'daniel@example.com', 'Tear down that wall.', idGenerator),
+                    insertEntry('Tim', 'Conway', '512-555-6312', 'daniel@example.com', 'Heh.', idGenerator),
+                    insertEntry('Richard', 'Marks', '655-555-0512', 'daniel@example.com', 'I miss the 80s.', idGenerator),
+                    insertEntry('Vladamir', 'Proscule', '808-555-9835', 'daniel@example.com', 'I do not exist.', idGenerator),
+                    insertEntry('Micky', 'Rourke', '405-555-5412', 'daniel@example.com', 'I act. Sometimes.', idGenerator),
+                    insertEntry('Sebastian', 'Mariner', '716-555-8765', 'daniel@example.com', 'I Shake the Speare.', idGenerator),
+                    insertEntry('Thomas', 'Beckett', '647-555-8653', 'daniel@example.com', 'I died in a cathedral.', idGenerator),
+                    insertEntry('Ricky', 'Astley', '503-555-3211', 'daniel@example.com', 'I roll.', idGenerator),
                     insertUser('daniel', 'mypassword', idGenerator),
                     insertUser('admin', 'admin', idGenerator),
                     insertUser('admin1', 'admin', idGenerator)
@@ -135,8 +138,9 @@ def toHex(bytes) {
     return sb.toString();
 }
 
-def insertEntry(firstname, lastname, idGenerator) {
-    return String.format("INSERT INTO directory_entry (id, first_name, last_name) VALUES (%s, '%s', '%s')", idGenerator(), firstname, lastname)
+def insertEntry(firstname, lastname, phone, email, statement, idGenerator) {
+    return String.format("INSERT INTO directory_entry (id, first_name, last_name, phone, email, statement) VALUES " +
+            "(%s, '%s', '%s', '%s', '%s', '%s')", idGenerator(), firstname, lastname, phone, email, statement)
 }
 
 def runSqlFunctions(sqlFunction) {
