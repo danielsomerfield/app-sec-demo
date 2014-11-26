@@ -4,17 +4,28 @@
     <jsp:include page="imports.jsp"/>
 </head>
 <body>
-<div class="entry">
+<div class="entry container">
     <%--@elvariable id="entry" type="demos.domain.DirectoryEntry"--%>
     <c:if test="${not empty entry}">
-        <div class="entry">
-            <div class="row">
-                <div class="col-md-4">First Name</div>
-                <div class="col-md-1">${entry.firstName}</div>
+        <div class="entry panel panel-primary">
+            <div class="panel-heading">
+                <div class="col-sm-8">${entry.lastName}, ${entry.firstName}</div>
             </div>
             <div class="row">
-                <div class="col-md-4">Last Name</div>
-                <div class="col-md-1">${entry.lastName}</div>
+                <div class="col-xs-6">Identification Number</div>
+                <div class="col-xs-6">${entry.id}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">Phone Number</div>
+                <div class="col-xs-6">${entry.phoneNumber}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">Email Address</div>
+                <div class="col-xs-6">${entry.email}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">Personal Statement</div>
+                <div class="col-xs-6">${entry.statement}</div>
             </div>
         </div>
     </c:if>

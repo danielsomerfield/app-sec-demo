@@ -15,7 +15,10 @@ public class DirectoryEntryDAO {
     private static final RowMapper<DirectoryEntry> ENTRY_ROW_MAPPER = (rs, rowNum) -> new DirectoryEntry(
             rs.getLong("id"),
             rs.getString("first_name"),
-            rs.getString("last_name")
+            rs.getString("last_name"),
+            rs.getString("phone"),
+            rs.getString("email"),
+            rs.getString("statement")
     );
 
     public static final String SEARCH_QUERY = "SELECT * FROM directory_entry WHERE UPPER(last_name) LIKE '%%%s%%' " +
