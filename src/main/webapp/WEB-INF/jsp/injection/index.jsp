@@ -2,11 +2,8 @@
 <html>
 <head>
     <title>Injection Demo</title>
-    <script src="${pageContext.request.contextPath}/js/jquery-2.1.1.js"></script>
+    <jsp:include page="imports.jsp" />
     <script src="${pageContext.request.contextPath}/js/app.js"></script>
-    <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.css"/>
 </head>
 <body>
 <div class="container">
@@ -60,5 +57,25 @@
         </div>
     </div>
 </div>
+<div id="entry-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">Entry View</h4>
+            </div>
+            <div class="modal-body">
+                <iframe id="entry-frame">Loading...</iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 </body>
 </html>

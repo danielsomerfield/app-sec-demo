@@ -17,17 +17,20 @@ public class DirectoryEntryDAO {
             rs.getString("first_name"),
             rs.getString("last_name")
     );
+
     public static final String SEARCH_QUERY = "SELECT * FROM directory_entry WHERE UPPER(last_name) LIKE '%%%s%%' " +
             "OR UPPER(first_name) LIKE '%%%s%%'";
+
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM directory_entry WHERE id = %s";
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public DirectoryEntryDAO(JdbcTemplate jdbcTemplate) {
+    public DirectoryEntryDAO(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<DirectoryEntry> findWithContainingText(String text) {
+    public List<DirectoryEntry> findWithContainingText(final String text) {
         return jdbcTemplate.query(
                 String.format(SEARCH_QUERY, text.toUpperCase(), text.toUpperCase()),
                 ENTRY_ROW_MAPPER
@@ -38,7 +41,15 @@ public class DirectoryEntryDAO {
         return jdbcTemplate.query(FIND_ALL_QUERY, ENTRY_ROW_MAPPER);
     }
 
-    public void delete(long id) {
+    public void delete(final long id) {
         throw new UnsupportedOperationException(); // TODO
+    }
+
+    public DirectoryEntry findById(final long entryId)
+    {
+        return jdbcTemplate.queryForObject(
+                String.format(FIND_BY_ID_QUERY, entryId),
+                ENTRY_ROW_MAPPER
+        );
     }
 }

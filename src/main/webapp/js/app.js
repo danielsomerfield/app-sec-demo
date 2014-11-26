@@ -36,7 +36,7 @@ var app = {
 
         $(".container").on("click", ".show-entry", function(){
             var id = $(this).attr("data-id");
-            app.showEntry(id);
+            ui.showEntry(id);
         });
     },
     search: function (text) {
@@ -50,10 +50,6 @@ var app = {
         remote.getUserState().success(function (userState) {
             ui.initAdminUI(userState["loggedIn"]);
         });
-    },
-    showEntry: function(entryId) {
-        console.log("show " + entryId);
-        alert("NYI: TODO - create a dialog and load the entry in an iframe.");
     }
 };
 
@@ -91,6 +87,12 @@ var ui = {
             $("#login-panel").show();
             $(".admin-required").hide();
         }
+    },
+    showEntry: function(entryId) {
+//        console.log("show " + entryId);
+//        alert("NYI: TODO - create a dialog and load the entry in an iframe.");
+        $("#entry-frame").attr("src", "/AppSecDemo/demo/entry/" + entryId);
+        $("#entry-modal").modal("show");
     }
 };
 

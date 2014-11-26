@@ -28,4 +28,9 @@ public class DirectoryService {
     public void deleteEntryById(long id) {
         directoryEntryDAO.delete(id);
     }
+
+    public DirectoryEntry getEntry(final long entryId)
+    {
+        return directoryEntryDAO.findById(entryId);
+    }
 }

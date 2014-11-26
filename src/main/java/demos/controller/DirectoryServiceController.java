@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -35,5 +36,18 @@ public class DirectoryServiceController {
     @RequestMapping(value = "/service/entries/{id}", method = RequestMethod.DELETE)
     public void deleteEntry(@PathVariable long id) {
         directoryService.deleteEntryById(id);
+    }
+
+    @RequestMapping(value="/entry/{entryId}", method=RequestMethod.GET)
+    public ModelAndView entry(@PathVariable final String entryId) {
+        final ModelAndView view = new ModelAndView("injection/entry-dialog");
+        try
+        {
+            view.addObject("entry", directoryService.getEntry(Long.parseLong(entryId)));
+        }
+        catch (Exception e) {
+            view.addObject("error", String.format("Failed to find entry with id %s", entryId));
+        }
+        return view;
     }
 }
