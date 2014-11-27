@@ -164,6 +164,13 @@ def runSqlStatements(sql) {
 tomcatRunWar.dependsOn rebuildDatabase
 tomcatRun.dependsOn rebuildDatabase
 
+if (System.getenv("PORT") != "") {
+    tomcat {
+        httpPort = Integer.parseInt(System.getenv("PORT"))
+    }
+}
+
+
 task stage(dependsOn: ['clean', 'war']) {
     println("Running stage task.")
 }
