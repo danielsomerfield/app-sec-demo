@@ -164,6 +164,11 @@ def runSqlStatements(sql) {
 tomcatRunWar.dependsOn rebuildDatabase
 tomcatRun.dependsOn rebuildDatabase
 
+println("*********************************")
+println("Environment: " + System.getenv())
+println("*********************************")
+
+
 println("Port is set to " + System.getenv("PORT"))
 
 if (System.getenv("PORT") != "") {
