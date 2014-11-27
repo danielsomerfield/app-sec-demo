@@ -38,8 +38,8 @@ public class DirectoryServiceController {
         directoryService.deleteEntryById(id);
     }
 
-    @RequestMapping(value="/entry/{entryId}", method=RequestMethod.GET)
-    public ModelAndView entry(@PathVariable final String entryId) {
+    @RequestMapping(value="/entry", method=RequestMethod.GET)
+    public ModelAndView entry(@RequestParam final String entryId) {
         final ModelAndView view = new ModelAndView("injection/entry-dialog");
         try
         {

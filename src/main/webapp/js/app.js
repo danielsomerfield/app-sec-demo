@@ -91,7 +91,7 @@ var ui = {
     showEntry: function(entryId) {
 //        console.log("show " + entryId);
 //        alert("NYI: TODO - create a dialog and load the entry in an iframe.");
-        $("#entry-frame").attr("src", "/AppSecDemo/demo/entry/" + entryId);
+        $("#entry-frame").attr("src", "/AppSecDemo/demo/entry/?entryId=" + entryId);
         $("#entry-modal").modal("show");
     }
 };

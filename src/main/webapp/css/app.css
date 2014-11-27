@@ -53,6 +53,19 @@ table th {
 }
 
 #entry-frame {
+    border: 0px;
     width: 100%;
-    height: 100%;
+}
+
+.entry .row {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.entry .entry-body {
+    padding: 5px;
+}
+
+.entry .panel-heading {
+    overflow: hidden;
 }
