@@ -34,7 +34,7 @@ public class UserDAO {
 
 
     @Autowired
-    public UserDAO(JdbcTemplate jdbcTemplate) {
+    public UserDAO(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -46,7 +46,7 @@ public class UserDAO {
     }
 
     private String hashPassword(final String password) {
-        MessageDigest m;
+        final MessageDigest m;
         try {
             m = MessageDigest.getInstance("MD5");
             m.update(password.getBytes("UTF-8"));

@@ -15,7 +15,7 @@ public class UserStateController {
 
     @RequestMapping(value = "/service/userState", method = RequestMethod.GET)
     @ResponseBody
-    public UserState getUserState(HttpSession session) {
+    public UserState getUserState(final HttpSession session) {
         return new UserState((UserState)session.getAttribute(USER_STATE_SESSION_ATTRIBUTE));
     }
 

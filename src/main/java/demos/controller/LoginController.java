@@ -29,7 +29,7 @@ public class LoginController {
     @ResponseBody
     public ResponseEntity<UserState> login(@RequestParam final String username,
                                            @RequestParam final String password,
-                                           HttpSession session) {
+                                           final HttpSession session) {
 
         final AppUser user = userService.findUserByUsernameAndPassword(username, password);
         return new ResponseEntity<>(
@@ -44,7 +44,7 @@ public class LoginController {
 
     @RequestMapping(value = "/service/logout", method = RequestMethod.POST)
     @ResponseBody
-    public UserState logout(HttpSession session) {
+    public UserState logout(final HttpSession session) {
         return storeAppState(new UserState(false), session);
     }
 

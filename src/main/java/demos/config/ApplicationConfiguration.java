@@ -19,7 +19,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public InternalResourceViewResolver resolver() {
-        InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
+        final InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
         internalResourceViewResolver.setViewClass(JstlView.class);
         internalResourceViewResolver.setPrefix("/WEB-INF/jsp/");
         internalResourceViewResolver.setSuffix(".jsp");
@@ -29,13 +29,13 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public JdbcTemplate jdbcTemplate()
     {
-        JdbcDataSource jdbcDataSource = new JdbcDataSource();
+        final JdbcDataSource jdbcDataSource = new JdbcDataSource();
         jdbcDataSource.setURL("jdbc:h2:~/appsecdemo;ACCESS_MODE_DATA=r");
         return new JdbcTemplate(jdbcDataSource);
     }
 
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    public void configureDefaultServletHandling(final DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
 }

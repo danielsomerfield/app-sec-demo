@@ -2,11 +2,11 @@ package demos.domain;
 
 public class AppUser {
 
-    private Long id;
-    private String username;
-    private String passwordHash;
+    private final Long id;
+    private final String username;
+    private final String passwordHash;
 
-    public AppUser(Long id, String username, String passwordHash) {
+    public AppUser(final Long id, final String username, final String passwordHash) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;

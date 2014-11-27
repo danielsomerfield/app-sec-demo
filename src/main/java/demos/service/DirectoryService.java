@@ -10,14 +10,14 @@ import java.util.List;
 @Service
 public class DirectoryService {
 
-    private DirectoryEntryDAO directoryEntryDAO;
+    private final DirectoryEntryDAO directoryEntryDAO;
 
     @Autowired
-    public DirectoryService(DirectoryEntryDAO directoryEntryDAO) {
+    public DirectoryService(final DirectoryEntryDAO directoryEntryDAO) {
         this.directoryEntryDAO = directoryEntryDAO;
     }
 
-    public List<DirectoryEntry> entriesWithText(String text) {
+    public List<DirectoryEntry> entriesWithText(final String text) {
         return directoryEntryDAO.findWithContainingText(text);
     }
 
@@ -25,7 +25,7 @@ public class DirectoryService {
         return directoryEntryDAO.findAll();
     }
 
-    public void deleteEntryById(long id) {
+    public void deleteEntryById(final long id) {
         directoryEntryDAO.delete(id);
     }
 

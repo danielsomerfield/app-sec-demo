@@ -16,13 +16,13 @@ public class DirectoryServiceController {
     private DirectoryService directoryService;
 
     @Autowired
-    public DirectoryServiceController(DirectoryService directoryService) {
+    public DirectoryServiceController(final DirectoryService directoryService) {
         this.directoryService = directoryService;
     }
 
     @RequestMapping("/service/search/{query}")
     @ResponseBody
-    public List<DirectoryEntry> findEntries(@PathVariable("query") String query) {
+    public List<DirectoryEntry> findEntries(@PathVariable("query") final String query) {
         return directoryService.entriesWithText(query);
     }
 
@@ -34,7 +34,7 @@ public class DirectoryServiceController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/service/entries/{id}", method = RequestMethod.DELETE)
-    public void deleteEntry(@PathVariable long id) {
+    public void deleteEntry(@PathVariable final long id) {
         directoryService.deleteEntryById(id);
     }
 
@@ -45,7 +45,7 @@ public class DirectoryServiceController {
         {
             view.addObject("entry", directoryService.getEntry(Long.parseLong(entryId)));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             view.addObject("error", String.format("Failed to find entry with id %s", entryId));
         }
         return view;
