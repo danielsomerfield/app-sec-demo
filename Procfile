@@ -1,1 +1,1 @@
-web: ./gradlew tR
+web: PORT=$PORT ./gradlew tR
