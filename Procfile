@@ -1,1 +1,1 @@
-web: PORT=$PORT ./gradlew tR
+web: echo "**** From the Procfile, the port is $PORT"; PORT=$PORT ./gradlew tR
