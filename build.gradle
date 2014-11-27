@@ -164,6 +164,8 @@ def runSqlStatements(sql) {
 tomcatRunWar.dependsOn rebuildDatabase
 tomcatRun.dependsOn rebuildDatabase
 
+println("Port is set to " + System.getenv("PORT"))
+
 if (System.getenv("PORT") != "") {
     tomcat {
         httpPort = Integer.parseInt(System.getenv("PORT"))
