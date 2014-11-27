@@ -164,4 +164,6 @@ def runSqlStatements(sql) {
 tomcatRunWar.dependsOn rebuildDatabase
 tomcatRun.dependsOn rebuildDatabase
 
-task stage(dependsOn: ['clean', 'war'])
+task stage(dependsOn: ['clean', 'war']) {
+    println("Running stage task.")
+}
