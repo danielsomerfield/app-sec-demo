@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Injection Demo</title>
+    <title>AppSec Demo</title>
     <jsp:include page="imports.jsp" />
     <script src="${pageContext.request.contextPath}/js/app.js"></script>
 </head>

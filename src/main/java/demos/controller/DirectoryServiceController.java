@@ -40,7 +40,7 @@ public class DirectoryServiceController {
 
     @RequestMapping(value="/entry", method=RequestMethod.GET)
     public ModelAndView entry(@RequestParam final String entryId) {
-        final ModelAndView view = new ModelAndView("injection/entry-dialog");
+        final ModelAndView view = new ModelAndView("entry-dialog");
         try
         {
             view.addObject("entry", directoryService.getEntry(Long.parseLong(entryId)));

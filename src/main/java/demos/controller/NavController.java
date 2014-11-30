@@ -1,10 +1,8 @@
     package demos.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
     /**
  * Created by danielsomerfield on 10/29/14.
@@ -16,11 +14,5 @@ public class NavController {
     public String home()
     {
         return "index";
-    }
-
-    @RequestMapping(value="/injection", method = RequestMethod.GET)
-    public String injectionHome()
-    {
-        return "injection/index";
     }
 }
