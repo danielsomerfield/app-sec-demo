@@ -109,9 +109,12 @@ def doInserts() {
                     insertEntry('Sebastian', 'Mariner', '716-555-8765', 'daniel@example.com', 'I Shake the Speare.', idGenerator),
                     insertEntry('Thomas', 'Beckett', '647-555-8653', 'daniel@example.com', 'I died in a cathedral.', idGenerator),
                     insertEntry('Ricky', 'Astley', '503-555-3211', 'daniel@example.com', 'I roll.', idGenerator),
-                    insertUser('daniel', 'mypassword', idGenerator),
                     insertUser('admin', 'admin', idGenerator),
-                    insertUser('admin1', 'admin', idGenerator)
+                    insertUser('admin1', 'admin', idGenerator),
+                    insertUser('user1', 'password', idGenerator),
+                    insertUser('user2', 'foobar', idGenerator),
+                    insertUser('trekfan1', 'picard', idGenerator),
+                    insertUser('trekfan2', 'picard', idGenerator)
             ]
     )
 }
