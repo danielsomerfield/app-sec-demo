@@ -35,7 +35,7 @@ public class DirectoryServiceController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/service/entries/{id}", method = RequestMethod.DELETE)
     public void deleteEntry(@PathVariable final long id) {
-        directoryService.deleteEntryById(id);
+        //directoryService.deleteEntryById(id);
     }
 
     @RequestMapping(value="/entry", method=RequestMethod.GET)

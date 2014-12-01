@@ -34,10 +34,10 @@
 
         <table style="display:none">
             <tbody id="template">
-            <tr>
+            <tr class="entry-row">
                 <td><span><a class="show-entry" href="#" data-id="{id}">{lastName}</a></span></td>
                 <td><span><a class="show-entry" href="#" data-id="{id}">{firstName}</a></span></td>
-                <td class="admin-required"><span>[ x ]</span></td>
+                <td class="admin-required"><span><a href="#" class="delete-entry" data-id="{id}">[ x ]</a></span></td>
             </tr>
             </tbody>
         </table>

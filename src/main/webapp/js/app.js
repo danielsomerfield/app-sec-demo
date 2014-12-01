@@ -37,6 +37,15 @@ var app = {
             var id = $(this).attr("data-id");
             ui.showEntry(id);
         });
+
+        $(".container").on("click", ".delete-entry", function(){
+            var tag = $(this);
+            var id = tag.attr("data-id");
+            app.deleteEntry(id).success(function(){
+                tag.parents(".entry-row").fadeOut();
+            });
+            return false;
+        });
     },
     search: function (text) {
         remote.search(text).done(function (result) {
@@ -49,6 +58,9 @@ var app = {
         remote.getUserState().success(function (userState) {
             ui.initAdminUI(userState["loggedIn"]);
         });
+    },
+    deleteEntry: function(id) {
+        return remote.deleteEntry(id);
     }
 };
 
@@ -127,6 +139,13 @@ var remote = {
                     username: username,
                     password: password
                 }
+            }
+        );
+    },
+    deleteEntry: function(id) {
+        return $.ajax("/AppSecDemo/demo/service/entries/${q}".replace("${q}", id),
+            {
+                type: "DELETE"
             }
         );
     },
