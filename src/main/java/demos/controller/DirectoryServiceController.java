@@ -20,13 +20,13 @@ public class DirectoryServiceController {
         this.directoryService = directoryService;
     }
 
-    @RequestMapping("/service/search/{query}")
+    @RequestMapping(value="/service/search/{query}", method = RequestMethod.GET)
     @ResponseBody
     public List<DirectoryEntry> findEntries(@PathVariable("query") final String query) {
         return directoryService.entriesWithText(query);
     }
 
-    @RequestMapping("/service/entries/")
+    @RequestMapping(value="/service/entries/", method=RequestMethod.GET)
     @ResponseBody
     public List<DirectoryEntry> allEntries() {
         return directoryService.allEntries();
@@ -35,6 +35,11 @@ public class DirectoryServiceController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/service/entries/{id}", method = RequestMethod.DELETE)
     public void deleteEntry(@PathVariable final long id) {
+        /**
+         * This is not actually implemented so the the demo
+         * can be done without write permission to the DB which would
+         * make the multi-user scenario challenging.
+         */
         //directoryService.deleteEntryById(id);
     }
 

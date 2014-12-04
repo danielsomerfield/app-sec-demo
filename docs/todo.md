@@ -1,7 +1,3 @@
-# TODO
-- Reject delete calls if not logged in
-- Make sure we have request methods on everything
-
 # Demos
 - ADD password protected page (and username / password table) that is susceptible to:
     - OR 1 = 1 
@@ -17,9 +13,9 @@
     - Login in via aasdf' OR 1 = 1 --
     - %3b = ;
     
-    
 - XSS
     - Direct link to entry that is JS injectable
+    - http://localhost:8080/AppSecDemo/demo/entry/?entryId=1
 
 - Auth / Session
     - Leaky JS forms
